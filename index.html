@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Модель компетенций управленца в здравоохранении</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffaf2;
+      --ink: #18212f;
+      --muted: #637083;
+      --line: rgba(24, 33, 47, .13);
+      --green: #3d6b5d;
+      --terracotta: #b45f3c;
+      --blue: #356b8c;
+      --rose: #9e3d58;
+      --olive: #7c6a2a;
+      --leaf: #557a46;
+      --violet: #7b4f9c;
+      --teal: #2f7b7b;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", "Noto Sans", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 6%, rgba(180, 95, 60, .18), transparent 28%),
+        radial-gradient(circle at 92% 14%, rgba(47, 123, 123, .14), transparent 26%),
+        linear-gradient(135deg, #f8f4ec 0%, #efe9dc 100%);
+      min-height: 100vh;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 42px clamp(18px, 4vw, 64px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, .7);
+      border-radius: 999px;
+      padding: 9px 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(420px, 1fr) minmax(480px, 720px);
+      gap: clamp(28px, 5vw, 72px);
+      align-items: center;
+    }
+
+    .kicker {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 20px;
+      color: var(--green);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      border-radius: 99px;
+      background: var(--green);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 880px;
+      font-size: clamp(44px, 6vw, 86px);
+      line-height: .94;
+      letter-spacing: -.055em;
+    }
+
+    .lead {
+      margin: 26px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(18px, 1.7vw, 24px);
+      line-height: 1.45;
+    }
+
+    .purpose {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 860px;
+    }
+
+    .purpose-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, .72);
+      border-radius: 22px;
+      padding: 18px;
+      min-height: 132px;
+      box-shadow: 0 16px 40px rgba(24, 33, 47, .06);
+    }
+
+    .purpose-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .purpose-card span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .model-card {
+      position: relative;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, .72);
+      border-radius: 36px;
+      padding: clamp(18px, 2.2vw, 34px);
+      box-shadow: 0 26px 70px rgba(24, 33, 47, .12);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .model-card::before {
+      content: "";
+      position: absolute;
+      inset: -30% -20% auto auto;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(180, 95, 60, .16), transparent 68%);
+      pointer-events: none;
+    }
+
+    svg { display: block; width: 100%; height: auto; position: relative; }
+
+    .domain-number {
+      fill: white;
+      font-weight: 800;
+      font-size: 18px;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+
+    .center-title {
+      fill: var(--ink);
+      font-size: 24px;
+      font-weight: 800;
+      text-anchor: middle;
+    }
+
+    .center-subtitle {
+      fill: var(--muted);
+      font-size: 13px;
+      text-anchor: middle;
+    }
+
+    .domain-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .domain {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,.42);
+    }
+
+    .dot {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      color: white;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .domain b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .domain span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .bottom-note {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .scale {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .scale span {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, .72);
+      border-radius: 999px;
+      padding: 8px 11px;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .model-card { max-width: 760px; }
+      .purpose { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 24px 16px; }
+      .topline, .bottom-note { align-items: flex-start; flex-direction: column; }
+      .domain-list { grid-template-columns: 1fr; }
+      .lead { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="hero">
+    <header class="topline">
+      <div class="badge">Компетентностная модель · версия 0.1</div>
+      <div>управленцы в здравоохранении</div>
+    </header>
+
+    <section class="hero-grid" aria-label="Первый экран презентации модели компетенций">
+      <div>
+        <div class="kicker">8 доменов развития</div>
+        <h1>Модель компетенций управленца в здравоохранении</h1>
+        <p class="lead">
+          Инструмент, который помогает описать, оценить и развивать управленческую зрелость —
+          от руководителя подразделения до регионального, федерального и страхового уровня.
+        </p>
+
+        <div class="purpose" aria-label="Цель существования модели компетенций">
+          <div class="purpose-card">
+            <strong>Единый язык</strong>
+            <span>Дать системе понятную рамку: какие компетенции важны для управленца в здравоохранении и как они проявляются на разных уровнях.</span>
+          </div>
+          <div class="purpose-card">
+            <strong>Диагностика и развитие</strong>
+            <span>Связать оценку компетенций с индивидуальной траекторией роста, обучением, наставничеством и кадровым резервом.</span>
+          </div>
+          <div class="purpose-card">
+            <strong>Кадровые решения</strong>
+            <span>Поддержать подбор, продвижение и подготовку руководителей под реальные задачи медицинской организации, региона и системы.</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="model-card" aria-label="8 блоков модели компетенций">
+        <svg viewBox="0 0 680 680" role="img" aria-label="Круговая схема из восьми блоков компетенций">
+          <defs>
+            <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="rgba(24,33,47,.22)"/>
+            </filter>
+          </defs>
+          <g transform="translate(340 330)" filter="url(#shadow)">
+            <path d="M 0 -292 A 292 292 0 0 1 206.48 -206.48 L 118.79 -118.79 A 168 168 0 0 0 0 -168 Z" fill="var(--green)"/>
+            <path d="M 206.48 -206.48 A 292 292 0 0 1 292 0 L 168 0 A 168 168 0 0 0 118.79 -118.79 Z" fill="var(--terracotta)"/>
+            <path d="M 292 0 A 292 292 0 0 1 206.48 206.48 L 118.79 118.79 A 168 168 0 0 0 168 0 Z" fill="var(--blue)"/>
+            <path d="M 206.48 206.48 A 292 292 0 0 1 0 292 L 0 168 A 168 168 0 0 0 118.79 118.79 Z" fill="var(--rose)"/>
+            <path d="M 0 292 A 292 292 0 0 1 -206.48 206.48 L -118.79 118.79 A 168 168 0 0 0 0 168 Z" fill="var(--olive)"/>
+            <path d="M -206.48 206.48 A 292 292 0 0 1 -292 0 L -168 0 A 168 168 0 0 0 -118.79 118.79 Z" fill="var(--leaf)"/>
+            <path d="M -292 0 A 292 292 0 0 1 -206.48 -206.48 L -118.79 -118.79 A 168 168 0 0 0 -168 0 Z" fill="var(--violet)"/>
+            <path d="M -206.48 -206.48 A 292 292 0 0 1 0 -292 L 0 -168 A 168 168 0 0 0 -118.79 -118.79 Z" fill="var(--teal)"/>
+            <circle cx="0" cy="0" r="150" fill="#fffaf2" stroke="rgba(24,33,47,.14)" stroke-width="2"/>
+            <text class="center-title" x="0" y="-18">Управленец</text>
+            <text class="center-title" x="0" y="14">в здравоохранении</text>
+            <text class="center-subtitle" x="0" y="47">отрасль + управление + люди + данные</text>
+            <text class="domain-number" x="112" y="-224">1</text>
+            <text class="domain-number" x="224" y="-112">2</text>
+            <text class="domain-number" x="224" y="112">3</text>
+            <text class="domain-number" x="112" y="224">4</text>
+            <text class="domain-number" x="-112" y="224">5</text>
+            <text class="domain-number" x="-224" y="112">6</text>
+            <text class="domain-number" x="-224" y="-112">7</text>
+            <text class="domain-number" x="-112" y="-224">8</text>
+          </g>
+        </svg>
+
+        <div class="domain-list">
+          <div class="domain"><i class="dot" style="background:var(--green)">1</i><div><b>Отраслевая и системная навигация</b><span>Система, регуляторика, приоритеты, взаимодействие.</span></div></div>
+          <div class="domain"><i class="dot" style="background:var(--terracotta)">2</i><div><b>Стратегическое управление и результат</b><span>Цели, метрики, решения, приоритизация.</span></div></div>
+          <div class="domain"><i class="dot" style="background:var(--blue)">3</i><div><b>Операционное управление и эффективность</b><span>Процессы, проекты, изменения, результативность.</span></div></div>
+          <div class="domain"><i class="dot" style="background:var(--rose)">4</i><div><b>Качество, безопасность, пациентоцентричность</b><span>Качество помощи, безопасность, пациентский путь.</span></div></div>
+          <div class="domain"><i class="dot" style="background:var(--olive)">5</i><div><b>Ресурсы и устойчивость</b><span>Финансы, кадры, риски, работа в ограничениях.</span></div></div>
+          <div class="domain"><i class="dot" style="background:var(--leaf)">6</i><div><b>Люди, команды, организационная среда</b><span>Задачи, делегирование, развитие, ответственность.</span></div></div>
+          <div class="domain"><i class="dot" style="background:var(--violet)">7</i><div><b>Коммуникации и влияние</b><span>Переговоры, взаимодействие, внешняя коммуникация.</span></div></div>
+          <div class="domain"><i class="dot" style="background:var(--teal)">8</i><div><b>Цифровое управление, данные, ИБ</b><span>Данные, цифровая зрелость, информационные потоки.</span></div></div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="bottom-note">
+      <div>Сквозная логика уровней: от локального процесса к системным правилам.</div>
+      <div class="scale">
+        <span>Линейный</span>
+        <span>МО</span>
+        <span>Регион</span>
+        <span>Федеральный / страховой</span>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
